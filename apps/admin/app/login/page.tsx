@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { Button, Card, Input } from '@nexoura/ui';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -34,45 +35,44 @@ export default function LoginPage() {
 
   return (
     <main className="min-h-screen bg-slate-950 text-white grid place-items-center px-4">
-      <div className="w-full max-w-md rounded-3xl border border-slate-700 bg-slate-900/90 p-10 shadow-xl shadow-slate-900/30">
+      <Card className="w-full max-w-md">
         <h1 className="text-3xl font-semibold">Sign in to Nexoura</h1>
         <p className="mt-3 text-slate-400">Authentication foundation for the admin platform.</p>
 
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-4">
-            <label className="block text-sm font-medium text-slate-200">
+            <label className="block text-sm font-medium text-slate-200" htmlFor="email">
               Email
-              <input
-                type="email"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-                className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none focus:border-slate-500"
-                required
-              />
             </label>
-            <label className="block text-sm font-medium text-slate-200">
+            <Input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              required
+            />
+
+            <label className="block text-sm font-medium text-slate-200" htmlFor="password">
               Password
-              <input
-                type="password"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-                className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none focus:border-slate-500"
-                required
-              />
             </label>
+            <Input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              required
+            />
           </div>
 
-          {error ? <p className="text-sm text-red-400">{error}</p> : null}
+          <p className="min-h-[1.25rem] text-sm text-red-400" aria-live="polite">
+            {error}
+          </p>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full rounded-2xl bg-sky-600 px-4 py-3 text-white transition hover:bg-sky-500 disabled:opacity-50"
-          >
+          <Button type="submit" className="w-full" disabled={loading}>
             {loading ? 'Signing in…' : 'Sign in'}
-          </button>
+          </Button>
         </form>
-      </div>
+      </Card>
     </main>
   );
 }
